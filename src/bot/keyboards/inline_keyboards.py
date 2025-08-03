@@ -35,14 +35,65 @@ class BotKeyboards:
         keyboard = [
             [
                 InlineKeyboardButton("🔔 Reminder Settings", callback_data="reminder_settings"),
-                InlineKeyboardButton("🌍 Timezone", callback_data="timezone_settings")
+                InlineKeyboardButton("� Language / Bahasa", callback_data="language_settings")
             ],
             [
-                InlineKeyboardButton("📊 Lihat Stats", callback_data="view_stats"),
-                InlineKeyboardButton("🗑️ Reset Data", callback_data="reset_data")
+                InlineKeyboardButton("�🌍 Timezone", callback_data="timezone_settings"),
+                InlineKeyboardButton("📊 Lihat Stats", callback_data="view_stats")
             ],
             [
-                InlineKeyboardButton("🔙 Kembali", callback_data="main_menu")
+                InlineKeyboardButton("🗑️ Reset Data", callback_data="reset_data"),
+                InlineKeyboardButton("� Kembali", callback_data="main_menu")
+            ]
+        ]
+        return InlineKeyboardMarkup(keyboard)
+    
+    @staticmethod
+    def reminder_settings_menu():
+        """Reminder settings keyboard"""
+        keyboard = [
+            [
+                InlineKeyboardButton("✅ Enable Daily Reminders", callback_data="enable_reminders"),
+                InlineKeyboardButton("❌ Disable Reminders", callback_data="disable_reminders")
+            ],
+            [
+                InlineKeyboardButton("⏰ Set Reminder Time", callback_data="set_reminder_time"),
+                InlineKeyboardButton("� Reminder Frequency", callback_data="reminder_frequency")
+            ],
+            [
+                InlineKeyboardButton("🔙 Back to Settings", callback_data="settings_menu")
+            ]
+        ]
+        return InlineKeyboardMarkup(keyboard)
+    
+    @staticmethod
+    def language_settings_menu():
+        """Language settings keyboard"""
+        keyboard = [
+            [
+                InlineKeyboardButton("🇺🇸 English", callback_data="lang_english"),
+                InlineKeyboardButton("🇮🇩 Bahasa Indonesia", callback_data="lang_indonesian")
+            ],
+            [
+                InlineKeyboardButton("🔙 Back to Settings", callback_data="settings_menu")
+            ]
+        ]
+        return InlineKeyboardMarkup(keyboard)
+    
+    @staticmethod
+    def reminder_frequency_menu():
+        """Reminder frequency selection keyboard"""
+        keyboard = [
+            [
+                InlineKeyboardButton("📅 Daily", callback_data="freq_daily"),
+                InlineKeyboardButton("📊 Every 3 Days", callback_data="freq_3days")
+            ],
+            [
+                InlineKeyboardButton("📈 Weekly", callback_data="freq_weekly"),
+                InlineKeyboardButton("🎯 Custom", callback_data="freq_custom")
+            ],
+            [
+                InlineKeyboardButton("🔙 Back to Reminders", callback_data="reminder_settings")
             ]
         ]
         return InlineKeyboardMarkup(keyboard)
@@ -189,4 +240,14 @@ class BotKeyboards:
     def back_to_main():
         """Simple back to main menu keyboard"""
         keyboard = [[InlineKeyboardButton("🔙 Kembali ke Menu", callback_data="main_menu")]]
+        return InlineKeyboardMarkup(keyboard)
+    
+    @staticmethod
+    def back_to_settings():
+        """Back to settings keyboard"""
+        keyboard = [
+            [
+                InlineKeyboardButton("🔙 Back to Settings", callback_data="settings_menu")
+            ]
+        ]
         return InlineKeyboardMarkup(keyboard)

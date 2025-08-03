@@ -13,7 +13,9 @@ from src.bot.handlers.command_handlers import CommandHandlers
 from src.bot.handlers.callback_handlers import CallbackHandlers
 from src.bot.handlers.admin_handlers import AdminHandlers
 from src.bot.handlers.message_handlers import MessageHandlers
+from src.bot.handlers.backup_handlers import register_backup_handlers
 from src.services.scheduler_service import SchedulerService
+from src.services.backup_scheduler import backup_scheduler
 from src.utils.logger import app_logger
 
 def setup_database_sync():
@@ -55,6 +57,9 @@ def setup_bot_handlers_sync(application: Application, scheduler_service: Schedul
     application.add_handler(CommandHandler("weeklysummary", admin_handlers.weekly_summary_command))
     application.add_handler(CommandHandler("adminhelp", admin_handlers.admin_help_command))
     application.add_handler(CommandHandler("adminstats", admin_handlers.admin_stats_command))
+    
+    # Register backup handlers
+    register_backup_handlers(application)
     
     # Add callback query handler
     application.add_handler(CallbackQueryHandler(callback_handlers.handle_callback))
@@ -145,6 +150,11 @@ def main():
     scheduler_service.start_scheduler()
     app_logger.info("⏰ Daily broadcast scheduler started")
     
+    # Start backup scheduler
+    app_logger.info("💾 Starting backup scheduler...")
+    backup_scheduler.start_scheduler()
+    app_logger.info("💾 Backup scheduler started - automated backups enabled")
+    
     # Setup handlers (synchronous) - pass scheduler to admin handlers
     app_logger.info("🔧 Setting up bot handlers...")
     setup_bot_handlers_sync(application, scheduler_service)
@@ -162,7 +172,9 @@ def main():
     finally:
         # Stop scheduler when bot stops
         scheduler_service.stop_scheduler()
+        backup_scheduler.stop_scheduler()
         app_logger.info("⏰ Scheduler stopped")
+        app_logger.info("💾 Backup scheduler stopped")
         app_logger.info("✅ Bot shutdown completed")
 
 if __name__ == "__main__":

@@ -6,6 +6,8 @@ from .emergency_service import EmergencyService
 from .journal_service import JournalService
 from .broadcast_service import BroadcastService
 from .scheduler_service import SchedulerService
+from .backup_service import BackupService
+from .backup_scheduler import BackupScheduler
 
 __all__ = [
     'UserService',
@@ -14,5 +16,7 @@ __all__ = [
     'EmergencyService',
     'JournalService',
     'BroadcastService',
-    'SchedulerService'
+    'SchedulerService',
+    'BackupService',
+    'BackupScheduler'
 ]

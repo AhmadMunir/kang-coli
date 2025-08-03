@@ -36,6 +36,15 @@ Sebuah bot Telegram AI yang dirancang untuk membantu pengguna dalam proses recov
 - 📈 Recovery timeline guidance
 - 🔬 Evidence-based information
 
+### 💾 **Advanced Backup & Recovery System**
+- 🔄 Automated daily/weekly backups
+- 📦 Manual backup creation
+- 🚨 Emergency backup functionality
+- 🔧 One-click data restore
+- 📊 Database integrity monitoring
+- ⚙️ Configurable retention policies
+- 🛡️ Multiple backup formats (SQLite + JSON)
+
 ### 🎛️ **Smart Features**
 - 🤖 Auto user registration
 - 📝 Personal journaling system
@@ -62,10 +71,13 @@ pip install -r requirements.txt
 cp .env.example .env
 # Edit .env dan tambahkan BOT_TOKEN
 
-# 4. Test setup
+# 4. Setup backup system (optional)
+python setup_backup_system.py
+
+# 5. Test setup
 python test_bot.py
 
-# 5. Run bot
+# 6. Run bot
 python main.py
 ```
 
@@ -98,6 +110,24 @@ pmo-recovery-bot/
 │   │   ├── user_service.py      # User management
 │   │   ├── streak_service.py    # Streak calculation
 │   │   ├── motivational_service.py # Quotes & tips
+│   │   ├── backup_service.py    # Backup & restore
+│   │   ├── backup_scheduler.py  # Automated backups
+│   │   └── emergency_service.py # Emergency mode
+│   └── utils/
+│       ├── __init__.py
+│       ├── logger.py     # Logging configuration
+│       ├── helpers.py    # Helper functions
+│       ├── recovery_tool.py # Database recovery
+│       └── constants.py  # App constants
+├── backups/             # Automatic backups storage
+│   ├── daily/          # Daily backups
+│   ├── weekly/         # Weekly backups
+│   ├── manual/         # Manual backups
+│   └── emergency/      # Emergency backups
+├── recovery/           # Recovery tools & reports
+├── backup_manager.py   # CLI backup management
+├── backup_manager.bat  # Windows backup script
+├── setup_backup_system.py # Backup system setup
 │   │   └── emergency_service.py # Emergency mode
 │   └── utils/
 │       ├── __init__.py
@@ -119,6 +149,14 @@ pmo-recovery-bot/
 5. Dapatkan motivasi dengan `/motivation`
 6. Mode darurat dengan `/emergency`
 7. Check-in harian dengan `/checkin`
+8. **Backup management (Admin)** dengan `/backup`
+
+### 💾 Data Backup & Recovery
+- **Automated Backups**: Daily (3AM) & Weekly (Sunday 2AM)
+- **Manual Backups**: Create anytime via `/backup` command
+- **CLI Management**: Use `python backup_manager.py` or `backup_manager.bat`
+- **One-Click Restore**: Full data recovery from any backup
+- **Health Monitoring**: Automatic database integrity checks
 
 ## 🛠️ Development
 
@@ -148,6 +186,15 @@ tests/
 │   ├── quick_test.py            # Quick functionality verification  
 │   └── simple_test.py           # Basic import testing
 ├── 🤖 Bot Tests
+│   ├── test_bot.py              # General bot functionality
+│   ├── test_handlers.py         # Message handlers testing
+│   ├── test_emergency.py        # Emergency mode testing
+│   └── test_emergency_nav.py    # Emergency navigation testing
+├── 💾 **Backup System Tests**
+│   ├── test_backup_system.py    # Complete backup system testing
+│   ├── test_backup_creation.py  # Backup creation functionality
+│   ├── test_restore_process.py  # Data restore verification
+│   └── test_database_recovery.py # Database repair testing
 │   ├── test_bot.py              # Comprehensive bot setup testing
 │   └── test_handlers.py         # Handler functionality testing
 ├── 🆘 Emergency Tests

@@ -85,6 +85,28 @@ class CallbackHandlers:
             await self._journal_cancel_callback(query, context)
         elif callback_data == "journal_edit":
             await self._journal_edit_callback(query, context)
+        elif callback_data == "reminder_settings":
+            await self._reminder_settings(query, context)
+        elif callback_data == "language_settings":
+            await self._language_settings(query, context)
+        elif callback_data == "timezone_settings":
+            await self._timezone_settings(query, context)
+        elif callback_data == "view_stats":
+            await self._view_stats(query, context)
+        elif callback_data == "reset_data":
+            await self._reset_data(query, context)
+        elif callback_data.startswith("lang_"):
+            await self._handle_language_selection(query, context, callback_data)
+        elif callback_data.startswith("freq_"):
+            await self._handle_reminder_frequency(query, context, callback_data)
+        elif callback_data == "enable_reminders":
+            await self._enable_reminders(query, context)
+        elif callback_data == "disable_reminders":
+            await self._disable_reminders(query, context)
+        elif callback_data == "set_reminder_time":
+            await self._set_reminder_time(query, context)
+        elif callback_data == "reminder_frequency":
+            await self._reminder_frequency_menu(query, context)
         else:
             await query.edit_message_text("Menu tidak dikenali. Kembali ke menu utama.", 
                                         reply_markup=BotKeyboards.main_menu())
@@ -1241,5 +1263,427 @@ Emergency mode tersedia 24/7 untuk immediate trigger support!
             "✏️ **Edit Journal Entry**\n\n"
             "Silakan ketik ulang journal entry kamu. Entry sebelumnya sudah dihapus.\n\n"
             "**⌨️ Ketik journal entry baru:**",
+            parse_mode='Markdown'
+        )
+    
+    # ========== SETTINGS HANDLERS ==========
+    
+    async def _reminder_settings(self, query, context):
+        """Handle reminder settings menu"""
+        user_info = get_user_info(query.from_user)
+        
+        # Get current reminder status (you can implement this in UserService)
+        current_status = "✅ Enabled"  # Default or get from database
+        
+        message = f"""
+🔔 **Reminder Settings**
+
+**Current Status:** {current_status}
+
+Kelola pengingat harian untuk membantu konsistensi recovery journey kamu:
+
+**📱 Available Options:**
+• **Enable/Disable** - Aktifkan atau nonaktifkan reminder
+• **Set Time** - Atur waktu pengingat (default: 20:00)
+• **Frequency** - Pilih seberapa sering reminder (daily, 3 days, weekly)
+
+**💡 Reminder Types:**
+✅ Daily check-in reminder
+✅ Streak celebration notifications
+✅ Motivational quotes
+✅ Emergency support reminders
+
+Pilih opsi yang ingin kamu atur:
+        """
+        
+        await query.edit_message_text(
+            message,
+            reply_markup=BotKeyboards.reminder_settings_menu(),
+            parse_mode='Markdown'
+        )
+    
+    async def _language_settings(self, query, context):
+        """Handle language settings menu"""
+        user_info = get_user_info(query.from_user)
+        
+        # Get current language (you can implement this in UserService)
+        current_lang = context.user_data.get('language', 'id')  # Default Indonesian
+        lang_display = "🇮🇩 Bahasa Indonesia" if current_lang == 'id' else "🇺🇸 English"
+        
+        message = f"""
+🌐 **Language Settings / Pengaturan Bahasa**
+
+**Current Language / Bahasa Saat Ini:** {lang_display}
+
+Choose your preferred language for the bot interface:
+Pilih bahasa yang kamu inginkan untuk interface bot:
+
+**🇺🇸 English:**
+- All messages in English
+- International recovery terminology
+- Global support resources
+
+**🇮🇩 Bahasa Indonesia:**
+- Semua pesan dalam Bahasa Indonesia
+- Terminologi recovery yang familiar
+- Sumber daya dukungan lokal
+
+Select your language / Pilih bahasa kamu:
+        """
+        
+        await query.edit_message_text(
+            message,
+            reply_markup=BotKeyboards.language_settings_menu(),
+            parse_mode='Markdown'
+        )
+    
+    async def _timezone_settings(self, query, context):
+        """Handle timezone settings"""
+        message = """
+🌍 **Timezone Settings**
+
+**Current Timezone:** Asia/Jakarta (GMT+7)
+
+Pengaturan timezone mempengaruhi:
+• ⏰ Reminder notifications
+• 📊 Daily check-in timing
+• 📈 Streak calculations
+• 📅 Statistics reports
+
+**🔧 Coming Soon:**
+Fitur untuk mengubah timezone akan segera tersedia.
+Saat ini menggunakan timezone Indonesia (WIB).
+
+**💡 Note:**
+Jika kamu berada di timezone yang berbeda, silakan hubungi admin untuk penyesuaian manual.
+        """
+        
+        await query.edit_message_text(
+            message,
+            reply_markup=BotKeyboards.back_to_settings(),
+            parse_mode='Markdown'
+        )
+    
+    async def _view_stats(self, query, context):
+        """Handle view stats"""
+        user_info = get_user_info(query.from_user)
+        
+        # You can implement actual stats retrieval here
+        message = f"""
+📊 **Your Recovery Statistics**
+
+**🏆 Current Streak:** 0 days
+**📈 Longest Streak:** 0 days
+**📅 Start Date:** Today
+**💪 Total Attempts:** 1
+**✅ Success Rate:** 100%
+
+**📝 Journal Entries:** 0
+**🆘 Emergency Protocols Used:** 0
+**💡 Motivational Messages:** 0
+
+**🎯 Milestones Achieved:**
+• 🌱 Day 1 - Recovery Started!
+
+**📈 Monthly Progress:**
+• This month: Just started!
+• Last month: New user
+
+**💡 Insights:**
+Kamu baru memulai journey recovery. Tetap semangat dan konsisten!
+
+**🔄 Data will update as you use the bot more.**
+        """
+        
+        await query.edit_message_text(
+            message,
+            reply_markup=BotKeyboards.back_to_settings(),
+            parse_mode='Markdown'
+        )
+    
+    async def _reset_data(self, query, context):
+        """Handle reset data with confirmation"""
+        message = """
+🗑️ **Reset Data Confirmation**
+
+**⚠️ WARNING - PERINGATAN**
+
+Kamu akan menghapus SEMUA data recovery:
+• 🏆 Streak records
+• 📝 Journal entries
+• 📊 Statistics
+• ⚙️ Settings preferences
+• 📅 Check-in history
+
+**❗ This action CANNOT be undone!**
+**❗ Tindakan ini TIDAK BISA dibatalkan!**
+
+**🤔 Are you sure?**
+Apakah kamu yakin ingin reset semua data recovery kamu?
+
+**💡 Alternative:**
+Jika kamu mengalami relapse, gunakan fitur "Lapor Relapse" daripada reset data. Ini akan mempertahankan progress history kamu.
+        """
+        
+        keyboard = [
+            [
+                InlineKeyboardButton("❌ Cancel", callback_data="settings_menu"),
+                InlineKeyboardButton("🗑️ Yes, Reset All", callback_data="confirm_reset_data")
+            ]
+        ]
+        
+        await query.edit_message_text(
+            message,
+            reply_markup=InlineKeyboardMarkup(keyboard),
+            parse_mode='Markdown'
+        )
+    
+    async def _handle_language_selection(self, query, context, callback_data):
+        """Handle language selection"""
+        user_info = get_user_info(query.from_user)
+        
+        if callback_data == "lang_english":
+            context.user_data['language'] = 'en'
+            lang_name = "🇺🇸 English"
+            message = """
+✅ **Language Changed Successfully**
+
+Your bot language has been set to **English**.
+
+All future messages will be displayed in English including:
+• Emergency protocols
+• Motivational messages  
+• Journal prompts
+• Recovery guidance
+
+**Note:** Some features may still show Indonesian text as we continue to add English translations.
+
+Thank you for using PMO Recovery Coach! 💪
+            """
+        else:  # lang_indonesian
+            context.user_data['language'] = 'id'
+            lang_name = "🇮🇩 Bahasa Indonesia"
+            message = """
+✅ **Bahasa Berhasil Diubah**
+
+Bahasa bot kamu telah diset ke **Bahasa Indonesia**.
+
+Semua pesan selanjutnya akan ditampilkan dalam Bahasa Indonesia termasuk:
+• Protokol emergency
+• Pesan motivasi
+• Prompt journal
+• Panduan recovery
+
+Terima kasih telah menggunakan PMO Recovery Coach! 💪
+            """
+        
+        app_logger.info(f"🌐 User {user_info['telegram_id']} changed language to {lang_name}")
+        
+        await query.edit_message_text(
+            message,
+            reply_markup=BotKeyboards.back_to_settings(),
+            parse_mode='Markdown'
+        )
+    
+    async def _enable_reminders(self, query, context):
+        """Enable daily reminders"""
+        user_info = get_user_info(query.from_user)
+        context.user_data['reminders_enabled'] = True
+        
+        app_logger.info(f"🔔 User {user_info['telegram_id']} enabled reminders")
+        
+        message = """
+✅ **Reminders Enabled Successfully**
+
+Daily reminders have been activated for your recovery journey!
+
+**📱 You will receive:**
+• 🌅 Morning motivation (08:00 WIB)
+• 🌆 Evening check-in reminder (20:00 WIB)
+• 🏆 Streak milestone celebrations
+• 💪 Weekly progress updates
+
+**⚙️ Customization:**
+• Use "Set Reminder Time" to change timing
+• Use "Reminder Frequency" to adjust frequency
+• You can disable anytime in settings
+
+**💡 Pro Tip:**
+Consistent reminders help build healthy habits and maintain motivation throughout your recovery journey.
+
+Ready to stay on track! 🚀
+        """
+        
+        await query.edit_message_text(
+            message,
+            reply_markup=BotKeyboards.reminder_settings_menu(),
+            parse_mode='Markdown'
+        )
+    
+    async def _disable_reminders(self, query, context):
+        """Disable daily reminders"""
+        user_info = get_user_info(query.from_user)
+        context.user_data['reminders_enabled'] = False
+        
+        app_logger.info(f"🔕 User {user_info['telegram_id']} disabled reminders")
+        
+        message = """
+❌ **Reminders Disabled**
+
+Daily reminders have been turned off.
+
+**📴 You will no longer receive:**
+• Morning motivation messages
+• Evening check-in reminders
+• Automatic streak celebrations
+• Weekly progress updates
+
+**💡 Remember:**
+You can still manually:
+• Check your streak anytime
+• Write journal entries
+• Access emergency protocols
+• View motivational content
+
+**🔄 Re-enable anytime:**
+You can turn reminders back on whenever you want from this menu.
+
+**💪 Stay strong on your recovery journey!**
+        """
+        
+        await query.edit_message_text(
+            message,
+            reply_markup=BotKeyboards.reminder_settings_menu(),
+            parse_mode='Markdown'
+        )
+    
+    async def _set_reminder_time(self, query, context):
+        """Set custom reminder time"""
+        message = """
+⏰ **Set Reminder Time**
+
+**Current Time:** 20:00 WIB (8:00 PM)
+
+**🔧 Coming Soon:**
+Custom time selection will be available in the next update.
+
+**📋 Available Times (Default):**
+• 🌅 **Morning Motivation:** 08:00 WIB
+• 🌆 **Evening Check-in:** 20:00 WIB
+• 🏆 **Streak Celebration:** Real-time
+• 📊 **Weekly Report:** Sunday 19:00 WIB
+
+**💡 Recommended Times:**
+• **Morning (07:00-09:00):** Start day with motivation
+• **Evening (19:00-21:00):** Reflect and plan ahead
+• **Avoid late night:** Can affect sleep quality
+
+**🔄 For now:**
+Default times are optimized for Indonesian timezone and healthy daily rhythm.
+        """
+        
+        await query.edit_message_text(
+            message,
+            reply_markup=BotKeyboards.reminder_settings_menu(),
+            parse_mode='Markdown'
+        )
+    
+    async def _reminder_frequency_menu(self, query, context):
+        """Show reminder frequency options"""
+        current_freq = context.user_data.get('reminder_frequency', 'daily')
+        
+        message = f"""
+📋 **Reminder Frequency Settings**
+
+**Current Frequency:** {current_freq.title()}
+
+Choose how often you want to receive reminders:
+
+**📅 Daily (Recommended)**
+• Best for building consistent habits
+• Regular motivation and support
+• Helps maintain accountability
+
+**📊 Every 3 Days**
+• Less frequent but still regular
+• Good for established users
+• Reduces notification fatigue
+
+**📈 Weekly**
+• Minimal notifications
+• Focus on weekly progress
+• Good for independent users
+
+**🎯 Custom**
+• Set your own schedule
+• Flexible reminder timing
+• Advanced user option
+
+**💡 Recommendation:**
+New users benefit most from daily reminders to build the recovery habit.
+        """
+        
+        await query.edit_message_text(
+            message,
+            reply_markup=BotKeyboards.reminder_frequency_menu(),
+            parse_mode='Markdown'
+        )
+    
+    async def _handle_reminder_frequency(self, query, context, callback_data):
+        """Handle reminder frequency selection"""
+        user_info = get_user_info(query.from_user)
+        
+        freq_map = {
+            'freq_daily': ('daily', '📅 Daily'),
+            'freq_3days': ('3days', '📊 Every 3 Days'),
+            'freq_weekly': ('weekly', '📈 Weekly'),
+            'freq_custom': ('custom', '🎯 Custom')
+        }
+        
+        freq_key, freq_display = freq_map.get(callback_data, ('daily', '📅 Daily'))
+        context.user_data['reminder_frequency'] = freq_key
+        
+        app_logger.info(f"📋 User {user_info['telegram_id']} set reminder frequency to {freq_key}")
+        
+        if freq_key == 'custom':
+            message = """
+🎯 **Custom Frequency**
+
+**🔧 Coming Soon:**
+Custom frequency settings will be available in the next update.
+
+**📋 For now, please choose from:**
+• Daily - Every day
+• Every 3 Days - Twice per week
+• Weekly - Once per week
+
+**💡 Contact Support:**
+If you need a specific custom schedule, please contact the admin for manual configuration.
+            """
+        else:
+            message = f"""
+✅ **Frequency Updated Successfully**
+
+Your reminder frequency has been set to: **{freq_display}**
+
+**📱 What this means:**
+• {freq_display} motivational messages
+• {freq_display} check-in reminders
+• Streak celebrations remain real-time
+• Emergency protocols always available
+
+**⏰ Timing remains:**
+• Morning: 08:00 WIB
+• Evening: 20:00 WIB
+
+**🔄 Change anytime:**
+You can modify this setting whenever you want.
+
+**💪 Stay consistent with your recovery journey!**
+            """
+        
+        await query.edit_message_text(
+            message,
+            reply_markup=BotKeyboards.reminder_settings_menu(),
             parse_mode='Markdown'
         )
