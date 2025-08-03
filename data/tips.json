@@ -1,0 +1,122 @@
+[
+  {
+    "category": "physical",
+    "title": "Push-ups atau Jumping Jacks",
+    "description": "Lakukan 10-20 push-ups atau jumping jacks untuk mengalihkan energi dan meningkatkan endorphins. Aktivitas fisik intens dapat mengurangi urge secara signifikan.",
+    "duration": "5-10 menit"
+  },
+  {
+    "category": "physical", 
+    "title": "Cold Shower",
+    "description": "Mandi air dingin dapat mengurangi dorongan PMO dan meningkatkan mental clarity. Cold therapy juga melatih discipline dan mental toughness.",
+    "duration": "5-10 menit"
+  },
+  {
+    "category": "physical",
+    "title": "Jalan Kaki atau Jogging",
+    "description": "Keluar rumah dan berjalan kaki atau jogging ringan. Fresh air dan perubahan environment membantu mengalihkan pikiran dari urges.",
+    "duration": "15-30 menit"
+  },
+  {
+    "category": "mental",
+    "title": "Teknik Pernapasan 4-7-8",
+    "description": "Tarik napas dalam 4 detik, tahan 7 detik, hembuskan perlahan 8 detik. Ulangi 4-8 kali. Teknik ini mengaktifkan parasympathetic nervous system dan menenangkan pikiran.",
+    "duration": "5-10 menit"
+  },
+  {
+    "category": "mental",
+    "title": "Visualization Technique",
+    "description": "Bayangkan diri Anda di masa depan yang sudah bebas dari PMO. Rasakan kebanggaan, confidence, dan peace of mind. Visualisasi positif memperkuat motivasi jangka panjang.",
+    "duration": "10-15 menit"
+  },
+  {
+    "category": "mental",
+    "title": "Positive Affirmations",
+    "description": "Ucapkan affirmasi positif: 'Saya kuat', 'Saya mengendalikan hidup saya', 'Saya layak mendapat kehidupan yang lebih baik'. Repetisi affirmasi membangun self-confidence.",
+    "duration": "5-10 menit"
+  },
+  {
+    "category": "distraction",
+    "title": "Hubungi Teman atau Keluarga",
+    "description": "Telepon atau chat dengan orang yang Anda sayangi. Social connection mengurangi feelings of isolation dan memberikan support emotional.",
+    "duration": "10-30 menit"
+  },
+  {
+    "category": "distraction",
+    "title": "Bermain Game atau Puzzle",
+    "description": "Mainkan mobile game, puzzle, atau brain teaser yang membutuhkan fokus mental. Aktivitas ini mengalihkan attention dari urges ke challenge yang sehat.",
+    "duration": "15-30 menit"
+  },
+  {
+    "category": "distraction",
+    "title": "Menonton Video Edukatif",
+    "description": "Tonton TED talks, documentary, atau video educational di YouTube. Learning stimulates dopamine secara sehat dan produktif.",
+    "duration": "20-60 menit"
+  },
+  {
+    "category": "mindfulness",
+    "title": "Meditation Mindfulness",
+    "description": "Duduk tenang, fokus pada napas, dan amati pikiran tanpa menghakimi. Mindfulness meditation melatih awareness dan emotional regulation.",
+    "duration": "10-20 menit"
+  },
+  {
+    "category": "mindfulness",
+    "title": "Body Scan Technique",
+    "description": "Berbaring nyaman, scan seluruh tubuh dari kepala sampai kaki. Amati sensasi fisik tanpa judgment. Teknik ini meningkatkan body awareness dan relaksasi.",
+    "duration": "15-25 menit"
+  },
+  {
+    "category": "mindfulness",
+    "title": "Gratitude Practice",
+    "description": "Tuliskan 3-5 hal yang Anda syukuri hari ini. Fokus pada positive aspects of life mengalihkan attention dari negative urges ke appreciation.",
+    "duration": "10-15 menit"
+  },
+  {
+    "category": "productive",
+    "title": "Journaling",
+    "description": "Tulis perasaan, pikiran, dan trigger yang sedang Anda alami. Writing membantu process emotions dan mengidentifikasi patterns untuk prevention.",
+    "duration": "15-30 menit"
+  },
+  {
+    "category": "productive",
+    "title": "Belajar Skill Baru",
+    "description": "Gunakan waktu untuk belajar programming, bahasa baru, atau skill apapun melalui online courses. Learning memberikan sense of accomplishment dan purpose.",
+    "duration": "30-60 menit"
+  },
+  {
+    "category": "productive",
+    "title": "Organize Living Space",
+    "description": "Bersihkan dan rapikan kamar atau area kerja. Clean environment mendukung clear mind, plus memberikan sense of control dan productivity.",
+    "duration": "20-45 menit"
+  },
+  {
+    "category": "productive",
+    "title": "Creative Activities",
+    "description": "Gambar, menulis, bermain musik, atau aktivitas kreatif lainnya. Creative expression adalah outlet sehat untuk emotional energy.",
+    "duration": "30-90 menit"
+  },
+  {
+    "category": "physical",
+    "title": "Stretching atau Yoga",
+    "description": "Lakukan gentle stretching atau basic yoga poses. Movement therapy membantu release tension dan meningkatkan mind-body connection.",
+    "duration": "15-30 menit"
+  },
+  {
+    "category": "mental",
+    "title": "Read Recovery Materials",
+    "description": "Baca artikel, book, atau forum tentang addiction recovery. Educational content memberikan perspective dan motivation untuk continue journey.",
+    "duration": "20-40 menit"
+  },
+  {
+    "category": "distraction",
+    "title": "Listen to Music atau Podcast",
+    "description": "Dengarkan musik favorit atau podcast inspiratif. Audio content dapat mengalihkan attention dan memberikan positive emotional stimulation.",
+    "duration": "15-60 menit"
+  },
+  {
+    "category": "mindfulness",
+    "title": "Nature Connection",
+    "description": "Duduk di taman, lihat pemandangan, atau simply observe alam sekitar. Nature therapy terbukti mengurangi stress dan meningkatkan well-being.",
+    "duration": "15-45 menit"
+  }
+]

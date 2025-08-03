@@ -1,0 +1,9 @@
+python-telegram-bot==20.7
+python-dotenv==1.0.0
+sqlalchemy==2.0.23
+aiosqlite==0.19.0
+asyncio-mqtt==0.16.1
+pydantic==2.5.2
+loguru==0.7.2
+apscheduler==3.10.4
+requests==2.31.0
