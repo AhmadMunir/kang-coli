@@ -70,6 +70,17 @@ class BotKeyboards:
         return InlineKeyboardMarkup(keyboard)
     
     @staticmethod
+    def emergency_protocol_menu():
+        """Emergency protocol keyboard with back to emergency option"""
+        keyboard = [
+            [
+                InlineKeyboardButton("🆘 Kembali ke Emergency Mode", callback_data="emergency_mode"),
+                InlineKeyboardButton("🏠 Menu Utama", callback_data="main_menu")
+            ]
+        ]
+        return InlineKeyboardMarkup(keyboard)
+    
+    @staticmethod
     def education_menu():
         """Education menu keyboard"""
         keyboard = [
@@ -101,6 +112,20 @@ class BotKeyboards:
             ],
             [
                 InlineKeyboardButton("🔙 Kembali", callback_data="main_menu")
+            ]
+        ]
+        return InlineKeyboardMarkup(keyboard)
+    
+    @staticmethod
+    def journal_confirmation():
+        """Journal entry confirmation keyboard"""
+        keyboard = [
+            [
+                InlineKeyboardButton("💾 SIMPAN", callback_data="journal_save"),
+                InlineKeyboardButton("✏️ EDIT", callback_data="journal_edit")
+            ],
+            [
+                InlineKeyboardButton("🚫 BATAL", callback_data="journal_cancel")
             ]
         ]
         return InlineKeyboardMarkup(keyboard)

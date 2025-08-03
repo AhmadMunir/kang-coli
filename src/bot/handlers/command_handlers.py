@@ -3,6 +3,7 @@ from telegram.ext import ContextTypes
 from src.services import UserService, StreakService, MotivationalService
 from src.bot.keyboards import BotKeyboards
 from src.utils.helpers import format_streak_message, get_user_info
+from src.utils.logger import app_logger
 
 class CommandHandlers:
     """Handler untuk commands bot"""
@@ -16,6 +17,9 @@ class CommandHandlers:
         """Handler untuk /start command"""
         user_info = get_user_info(update.effective_user)
         user = self.user_service.get_or_create_user(**user_info)
+        
+        # Log user interaction
+        app_logger.info(f"👤 /start command from user {user.telegram_id} (@{user.username or 'no_username'})")
         
         welcome_message = f"""
 🌟 **Selamat datang di PMO Recovery Coach AI!** 🌟

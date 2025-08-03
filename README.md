@@ -52,7 +52,7 @@ Sebuah bot Telegram AI yang dirancang untuk membantu pengguna dalam proses recov
 ### Installation
 ```bash
 # 1. Clone repository
-git clone <repository-url>
+git clone https://github.com/AhmadMunir/kang-coli.githttps://github.com/AhmadMunir/kang-coli.git
 cd pmo-recovery-bot
 
 # 2. Install dependencies
@@ -135,6 +135,73 @@ pip install -r requirements-dev.txt
 # Run with debug mode
 python main.py --debug
 ```
+
+## 🧪 Testing
+
+Comprehensive test suite tersedia untuk verify functionality dan ensure quality. Semua test files telah diorganisir dalam folder `tests/` untuk struktur yang lebih rapi.
+
+### Test Structure
+```
+tests/
+├── 🚀 Quick Tests
+│   ├── quick_check.py           # Simple import dan dependency check
+│   ├── quick_test.py            # Quick functionality verification  
+│   └── simple_test.py           # Basic import testing
+├── 🤖 Bot Tests
+│   ├── test_bot.py              # Comprehensive bot setup testing
+│   └── test_handlers.py         # Handler functionality testing
+├── 🆘 Emergency Tests
+│   ├── test_emergency.py        # Emergency callback routing
+│   ├── test_emergency_nav.py    # Emergency navigation enhancement
+│   └── test_enhanced_emergency_protocols.py  # Enhanced protocols
+├── 📊 Database Tests
+│   ├── test_direct_database.py  # Database connectivity tests
+│   └── test_journal_database.py # Journal-specific DB operations  
+├── 📝 Journal Tests
+│   ├── test_journal.py          # JournalService methods
+│   ├── test_complete_journal.py # Complete journal workflow
+│   └── test_journal_handlers.py # Journal callback handlers
+└── 📋 Test Runners
+    ├── run_all_tests.py         # Master test runner
+    └── run_category_tests.py    # Category-specific runner
+```
+
+### Running Tests
+```bash
+# Run all tests dengan master runner
+python tests/run_all_tests.py
+
+# Run tests by category
+python tests/run_category_tests.py quick     # Quick tests only
+python tests/run_category_tests.py bot       # Bot functionality tests
+python tests/run_category_tests.py emergency # Emergency system tests
+python tests/run_category_tests.py database  # Database tests
+python tests/run_category_tests.py journal   # Journal functionality tests
+
+# Run individual tests
+python tests/test_bot.py                     # Single test file
+python tests/test_direct_database.py
+python tests/test_complete_journal_workflow.py
+python tests/test_journal_handlers.py
+
+# Run with pytest (if installed)
+pytest tests/ -v
+```
+
+### Test Coverage
+- ✅ **Database Operations**: SQLite connectivity, CRUD operations, schema validation
+- ✅ **Service Layer**: Business logic, data validation, error handling
+- ✅ **Bot Handlers**: User interaction, state management, message processing
+- ✅ **Integration**: End-to-end workflows, component integration
+- ✅ **Quality Assurance**: Error recovery, data integrity, user experience
+
+### Test Reports
+Recent test results menunjukkan:
+- 💾 Database storage: ✅ Working
+- 📝 Journal system: ✅ Working
+- 🤖 Bot handlers: ✅ Working
+- 📊 Statistics: ✅ Working
+- 🔄 Workflows: ✅ Working
 
 ## 📝 Contributing
 
