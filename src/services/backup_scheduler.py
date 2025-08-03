@@ -11,9 +11,9 @@ from typing import Dict, Optional
 import threading
 
 from .backup_service import backup_service
-from ..utils.logger import get_logger
+from ..utils.logger import app_logger
 
-logger = get_logger(__name__)
+logger = app_logger
 
 class BackupScheduler:
     """Handles automated backup scheduling and monitoring"""

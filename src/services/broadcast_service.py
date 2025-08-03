@@ -26,12 +26,19 @@ class BroadcastService:
             # Generate daily content
             broadcast_content = self._generate_daily_content()
             
+            # Get users who haven't checked in today for mood prompts
+            users_without_checkin = self.user_service.get_users_without_checkin_today()
+            
             sent_count = 0
             failed_count = 0
             
             for user in users:
                 try:
-                    await self._send_message_to_user(user.telegram_id, broadcast_content)
+                    # Check if user needs mood check-in prompt
+                    needs_mood_checkin = user.telegram_id in [u.telegram_id for u in users_without_checkin]
+                    
+                    # Send personalized broadcast
+                    await self._send_personalized_broadcast(user.telegram_id, broadcast_content, needs_mood_checkin)
                     sent_count += 1
                     app_logger.debug(f"Daily broadcast sent to user {user.telegram_id}")
                 except Exception as e:
@@ -223,6 +230,61 @@ class BroadcastService:
         
         return random.choice(ctas)
     
+    async def _send_personalized_broadcast(self, telegram_id: int, content: Dict, needs_mood_checkin: bool = False):
+        """Send personalized broadcast message with mood check-in if needed"""
+        from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+        
+        try:
+            # Format the base message
+            message = self._format_daily_message(content)
+            
+            # Create base keyboard
+            keyboard = [
+                [
+                    InlineKeyboardButton("💪 Daily Goals", callback_data="daily_goals"),
+                    InlineKeyboardButton("📊 My Progress", callback_data="check_progress")
+                ],
+                [
+                    InlineKeyboardButton("🎯 Coping Tools", callback_data="coping_strategies"),
+                    InlineKeyboardButton("🆘 Need Help?", callback_data="emergency_help")
+                ]
+            ]
+            
+            # Add mood check-in prompt if user hasn't checked in today
+            if needs_mood_checkin:
+                mood_message = (
+                    "\n\n🌡️ **Daily Mood Check-in**\n"
+                    "Belum mood check-in hari ini? Yuk track perasaanmu untuk recovery insights yang better!\n\n"
+                    "💡 **Quick tip:** Regular mood tracking helps identify patterns dan triggers. "
+                    "Consistency is key untuk sustainable recovery! 🔑"
+                )
+                message += mood_message
+                
+                # Add mood check-in buttons at the top
+                mood_keyboard = [
+                    [
+                        InlineKeyboardButton("🌡️ Quick Check-in", callback_data="quick_mood_checkin"),
+                        InlineKeyboardButton("📝 Detail Check-in", callback_data="detailed_mood_checkin")
+                    ]
+                ]
+                keyboard = mood_keyboard + keyboard
+            
+            # Send message with keyboard
+            await self.bot_application.bot.send_message(
+                chat_id=telegram_id,
+                text=message,
+                reply_markup=InlineKeyboardMarkup(keyboard),
+                parse_mode='Markdown'
+            )
+            
+        except Exception as e:
+            app_logger.error(f"Error sending personalized broadcast to user {telegram_id}: {e}")
+            # Fallback to simple message
+            await self.bot_application.bot.send_message(
+                chat_id=telegram_id,
+                text="🌅 Daily Recovery Reminder - Stay strong and keep going! 💪"
+            )
+
     async def _send_message_to_user(self, telegram_id: int, content: Dict):
         """Send formatted message to specific user"""
         

@@ -12,9 +12,9 @@ from pathlib import Path
 from typing import Dict, List, Optional, Tuple, Any
 import zipfile
 
-from ..utils.logger import get_logger
+from ..utils.logger import app_logger
 
-logger = get_logger(__name__)
+logger = app_logger
 
 class DataRecoveryTool:
     """Advanced data recovery and repair utilities"""

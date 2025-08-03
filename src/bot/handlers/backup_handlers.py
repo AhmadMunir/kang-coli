@@ -11,9 +11,9 @@ from pathlib import Path
 
 from ...services.backup_service import backup_service
 from ...services.backup_scheduler import backup_scheduler
-from ...utils.logger import get_logger
+from ...utils.logger import app_logger
 
-logger = get_logger(__name__)
+logger = app_logger
 
 # Admin user IDs (you should set this in your config)
 ADMIN_USER_IDS = {

@@ -89,6 +89,29 @@ class CheckIn(Base):
     def __repr__(self):
         return f"<CheckIn(user_id={self.user_id}, check_in_date={self.check_in_date})>"
 
+class MoodEntry(Base):
+    """Model untuk mood tracking entries"""
+    __tablename__ = "mood_entries"
+    
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, nullable=False)  # telegram_id
+    
+    mood_score = Column(Integer, nullable=False)  # 1-10 scale
+    energy_level = Column(Integer, nullable=True)  # 1-10 scale
+    stress_level = Column(Integer, nullable=True)  # 1-10 scale
+    sleep_quality = Column(Integer, nullable=True)  # 1-10 scale
+    urge_intensity = Column(Integer, nullable=True)  # 1-10 scale
+    
+    notes = Column(Text, nullable=True)
+    activities = Column(Text, nullable=True)  # JSON string for daily activities
+    triggers_today = Column(Text, nullable=True)  # JSON string for triggers encountered
+    
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    def __repr__(self):
+        return f"<MoodEntry(user_id={self.user_id}, mood_score={self.mood_score}, created_at={self.created_at})>"
+
 # Database setup
 engine = create_engine(settings.DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

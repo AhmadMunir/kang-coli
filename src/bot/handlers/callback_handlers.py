@@ -2,6 +2,7 @@ from telegram import Update
 from telegram.ext import ContextTypes
 from src.services import UserService, StreakService, MotivationalService, EmergencyService, JournalService
 from src.bot.keyboards import BotKeyboards
+from src.bot.handlers.mood_checkin_handlers import mood_checkin_handlers
 from src.utils.helpers import get_user_info, format_streak_message
 from src.utils.logger import app_logger
 
@@ -67,6 +68,18 @@ class CallbackHandlers:
             await self._handle_emergency(query, context, callback_data)
         elif callback_data == "daily_checkin":
             await self._daily_checkin(query, context)
+        elif callback_data == "quick_mood_checkin":
+            await mood_checkin_handlers.handle_mood_checkin_start(update, context)
+        elif callback_data == "detailed_mood_checkin":
+            await mood_checkin_handlers.handle_detailed_checkin(update, context)
+        elif callback_data.startswith("mood_score_"):
+            await mood_checkin_handlers.handle_mood_selection(update, context)
+        elif callback_data.startswith("quick_mood_"):
+            await mood_checkin_handlers.handle_quick_mood_response(update, context)
+        elif callback_data == "skip_mood_today":
+            await mood_checkin_handlers.handle_skip_mood_today(update, context)
+        elif callback_data == "finish_mood_checkin":
+            await mood_checkin_handlers.handle_finish_checkin(update, context)
         elif callback_data == "journal_menu":
             await self._journal_menu(query, context)
         elif callback_data == "mood_analysis":

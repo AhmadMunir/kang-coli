@@ -99,6 +99,73 @@ class BotKeyboards:
         return InlineKeyboardMarkup(keyboard)
     
     @staticmethod
+    def mood_checkin_menu():
+        """Mood check-in keyboard"""
+        keyboard = [
+            [
+                InlineKeyboardButton("😢 1 - Sangat Buruk", callback_data="mood_1"),
+                InlineKeyboardButton("😞 2 - Buruk", callback_data="mood_2"),
+                InlineKeyboardButton("😕 3 - Kurang Baik", callback_data="mood_3")
+            ],
+            [
+                InlineKeyboardButton("😐 4 - Biasa Saja", callback_data="mood_4"),
+                InlineKeyboardButton("🙂 5 - Netral", callback_data="mood_5"),
+                InlineKeyboardButton("😊 6 - Lumayan", callback_data="mood_6")
+            ],
+            [
+                InlineKeyboardButton("😄 7 - Baik", callback_data="mood_7"),
+                InlineKeyboardButton("😁 8 - Sangat Baik", callback_data="mood_8"),
+                InlineKeyboardButton("🤩 9 - Luar Biasa", callback_data="mood_9")
+            ],
+            [
+                InlineKeyboardButton("🌟 10 - Perfect!", callback_data="mood_10")
+            ],
+            [
+                InlineKeyboardButton("❌ Skip Check-in", callback_data="skip_checkin"),
+                InlineKeyboardButton("🔙 Kembali", callback_data="main_menu")
+            ]
+        ]
+        return InlineKeyboardMarkup(keyboard)
+    
+    @staticmethod
+    def mood_details_menu():
+        """Additional mood details keyboard"""
+        keyboard = [
+            [
+                InlineKeyboardButton("💪 Energy Level", callback_data="add_energy"),
+                InlineKeyboardButton("😰 Stress Level", callback_data="add_stress")
+            ],
+            [
+                InlineKeyboardButton("😴 Sleep Quality", callback_data="add_sleep"),
+                InlineKeyboardButton("🔥 Urge Intensity", callback_data="add_urges")
+            ],
+            [
+                InlineKeyboardButton("📝 Add Notes", callback_data="add_notes_mood"),
+                InlineKeyboardButton("✅ Selesai", callback_data="finish_checkin")
+            ],
+            [
+                InlineKeyboardButton("🔙 Back to Main", callback_data="main_menu")
+            ]
+        ]
+        return InlineKeyboardMarkup(keyboard)
+    
+    @staticmethod
+    def quick_mood_response():
+        """Quick response keyboard for broadcast mood check"""
+        keyboard = [
+            [
+                InlineKeyboardButton("😊 Baik (7)", callback_data="quick_mood_7"),
+                InlineKeyboardButton("🙂 OK (5)", callback_data="quick_mood_5"),
+                InlineKeyboardButton("😞 Kurang (3)", callback_data="quick_mood_3")
+            ],
+            [
+                InlineKeyboardButton("📝 Detail Check-in", callback_data="detailed_checkin"),
+                InlineKeyboardButton("⏭️ Nanti Saja", callback_data="skip_mood_today")
+            ]
+        ]
+        return InlineKeyboardMarkup(keyboard)
+    
+    @staticmethod
     def emergency_menu():
         """Emergency mode keyboard"""
         keyboard = [

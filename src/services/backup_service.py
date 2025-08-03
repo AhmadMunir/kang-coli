@@ -14,9 +14,9 @@ from typing import Dict, List, Optional, Tuple
 from pathlib import Path
 import asyncio
 
-from ..utils.logger import get_logger
+from ..utils.logger import app_logger
 
-logger = get_logger(__name__)
+logger = app_logger
 
 class BackupService:
     """Service for handling data backup and restore operations"""
