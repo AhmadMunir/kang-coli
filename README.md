@@ -175,9 +175,18 @@ pmo-recovery-bot/
 ├── backups/                  # Automated & manual backups
 └── tests/
     ├── __init__.py
-    ├── test_broadcast_mood.py     # Broadcast with mood check-in tests
-    ├── test_mood_enhancement.py   # Mood tracking feature tests
-    └── [other test files]         # Various component tests
+    ├── run_all_tests.py           # Script untuk menjalankan semua tests
+    ├── run_category_tests.py      # Script untuk menjalankan test by category
+    ├── test_organization.py       # Test organization guidelines
+    ├── feature/                   # Tests berdasarkan fitur
+    │   ├── mood/                  # Mood tracking tests
+    │   ├── journal/               # Journal system tests
+    │   ├── broadcast/             # Broadcast system tests
+    │   └── emergency/             # Emergency feature tests
+    ├── functional/                # Functional tests
+    ├── integration/               # Integration tests
+    ├── unit/                      # Unit tests
+    └── utils/                     # Test utilities
 │   │   ├── handlers/     # Bot message handlers
 │   │   ├── keyboards/    # Inline keyboards
 │   │   └── middleware/   # Bot middleware
@@ -258,29 +267,31 @@ python main.py --debug
 
 ## 🧪 Testing
 
-Comprehensive test suite tersedia untuk verify functionality dan ensure quality. Semua test files telah diorganisir dalam folder `tests/` untuk struktur yang lebih rapi.
+Comprehensive test suite tersedia untuk verify functionality dan ensure quality. Semua test files telah diorganisir dengan struktur yang lebih rapi untuk memudahkan maintenance dan pengembangan.
 
 ### Test Structure
 ```
 tests/
-├── 🚀 Quick Tests
-│   ├── quick_check.py           # Simple import dan dependency check
-│   ├── quick_test.py            # Quick functionality verification  
-│   └── simple_test.py           # Basic import testing
-├── 🤖 Bot Tests
-│   ├── test_bot.py              # General bot functionality
-│   ├── test_handlers.py         # Message handlers testing
-│   ├── test_emergency.py        # Emergency mode testing
-│   └── test_emergency_nav.py    # Emergency navigation testing
-├── 💾 **Backup System Tests**
-│   ├── test_backup_system.py    # Complete backup system testing
-│   ├── test_backup_creation.py  # Backup creation functionality
-│   ├── test_restore_process.py  # Data restore verification
-│   └── test_database_recovery.py # Database repair testing
-└── 🌡️ **Mood & Broadcast Tests**
-    ├── test_broadcast_mood.py    # Broadcast with mood check-in tests
-    ├── test_mood_enhancement.py  # Mood check-in feature tests
-    └── test_mood_analysis.py     # Mood data analysis testing
+├── feature/                     # Tests berdasarkan fitur
+│   ├── mood/                    # Mood tracking feature tests
+│   │   ├── test_mood.py         # Basic mood tracking
+│   │   ├── test_mood_analysis_fix.py # Mood analysis fixes
+│   │   └── test_mood_enhancement.py  # Enhanced mood features
+│   ├── journal/                 # Journal feature tests
+│   │   ├── test_journal.py      # Basic journal functionality
+│   │   ├── test_journal_database.py  # Journal database ops
+│   │   └── ... (other journal tests)
+│   ├── broadcast/               # Broadcast feature tests
+│   │   ├── test_broadcast.py    # Basic broadcast tests
+│   │   └── test_broadcast_mood.py # Broadcast with mood integration
+│   └── emergency/               # Emergency feature tests
+│       ├── test_emergency.py    # Basic emergency mode
+│       └── ... (other emergency tests)
+├── functional/                  # Tests untuk fungsi lengkap
+│   └── test_handlers.py         # Bot message handlers
+├── integration/                 # Tests untuk integrasi komponen
+├── unit/                        # Unit tests untuk komponen
+└── utils/                       # Test utilities dan helpers
 
 ## 📋 Changelog
 
@@ -338,20 +349,19 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ### Running Tests
 ```bash
 # Run all tests dengan master runner
-python tests/run_all_tests.py
+python -m tests.run_all_tests
 
 # Run tests by category
-python tests/run_category_tests.py quick     # Quick tests only
-python tests/run_category_tests.py bot       # Bot functionality tests
-python tests/run_category_tests.py emergency # Emergency system tests
-python tests/run_category_tests.py database  # Database tests
-python tests/run_category_tests.py journal   # Journal functionality tests
+python -m tests.run_category_tests feature.mood     # Mood feature tests
+python -m tests.run_category_tests feature.journal  # Journal feature tests
+python -m tests.run_category_tests feature.broadcast # Broadcast tests
+python -m tests.run_category_tests feature.emergency # Emergency tests
+python -m tests.run_category_tests functional       # Functional tests
 
 # Run individual tests
-python tests/test_bot.py                     # Single test file
-python tests/test_direct_database.py
-python tests/test_complete_journal_workflow.py
-python tests/test_journal_handlers.py
+python -m tests.feature.mood.test_mood              # Single mood test
+python -m tests.feature.journal.test_journal        # Single journal test
+python -m tests.feature.broadcast.test_broadcast_mood # Broadcast mood test
 
 # Run with pytest (if installed)
 pytest tests/ -v
