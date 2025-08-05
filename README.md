@@ -15,6 +15,14 @@ Sebuah bot Telegram AI yang dirancang untuk membantu pengguna dalam proses recov
 - 🎯 Milestone celebrations dengan rewards
 - 📅 Clean start date tracking
 
+### 🌡️ **Mood Check-in & Analysis**
+- 😊 Daily mood tracking (1-10 emoji scale)
+- 📊 Energy, stress, sleep, and urge intensity tracking
+- 📝 Personal notes & reflection
+- 🧠 Pattern identification for triggers
+- 🔄 Intelligent integration with broadcast system
+- 📈 Comprehensive mood history & trends
+
 ### 💪 **Motivational Support**
 - 📝 20+ inspirational quotes database
 - 🌅 Daily motivation messages
@@ -45,10 +53,19 @@ Sebuah bot Telegram AI yang dirancang untuk membantu pengguna dalam proses recov
 - ⚙️ Configurable retention policies
 - 🛡️ Multiple backup formats (SQLite + JSON)
 
-### 🎛️ **Smart Features**
+### �️ **Personalized Broadcast System**
+- 🌅 Dynamic daily content
+- 📚 Diverse message types (quotes, tips, facts, stories)
+- 🎯 Day-specific focus areas
+- 🌟 Motivational content rotation
+- 🌡️ Smart mood check-in prompts
+- 💬 Interactive engagement buttons
+
+### �🎛️ **Smart Features**
 - 🤖 Auto user registration
 - 📝 Personal journaling system
 - ✅ Daily check-ins
+- 🌡️ Mood tracking integration
 - ⚙️ Customizable settings
 - 🔔 Optional daily reminders
 
@@ -83,21 +100,84 @@ python main.py
 
 **📖 Detailed guide:** [QUICKSTART.md](QUICKSTART.md)
 
+## 🌡️ Fitur Mood Check-in
+
+Sistem mood check-in adalah enhancement terbaru yang mengintegrasikan tracking mood dengan broadcast system.
+
+### 🎯 Cara Kerja
+1. **Daily broadcast** akan mendeteksi jika pengguna belum melakukan check-in mood
+2. **Prompt dikirimkan** dengan pilihan quick check-in atau detailed check-in
+3. **Skala mood 1-10** dengan emoji yang sesuai untuk pengalaman yang intuitif
+4. **Feedback personalisasi** berdasarkan skor mood
+5. **Opsional pendalaman** dengan energy, stress, sleep, dan urge tracking
+6. **Data disimpan** untuk analisis pola dan tren
+
+### 💡 Manfaat untuk Recovery
+- **Awareness yang lebih baik** tentang faktor emotional dalam recovery
+- **Identifikasi trigger** berdasarkan pola mood
+- **Personalisasi intervensi** sesuai kebutuhan pengguna
+- **Streak continuity** terlepas dari partisipasi mood check-in
+- **Engagement yang lebih tinggi** dengan interaksi yang meaningful
+
+**📖 Detail implementation:** [MOOD_CHECKIN_ENHANCEMENT.md](docs/MOOD_CHECKIN_ENHANCEMENT.md)
+
 ## 📁 Struktur Project
 
 ```
 pmo-recovery-bot/
-├── main.py                 # Entry point aplikasi
-├── requirements.txt        # Dependencies Python
-├── .env.example           # Template environment variables
-├── .gitignore            # Git ignore file
-├── README.md             # Dokumentasi project
+├── main.py                   # Entry point aplikasi
+├── run_bot.py                # Script untuk menjalankan bot
+├── requirements.txt          # Dependencies Python
+├── requirements-dev.txt      # Dependencies untuk development
+├── .env.example              # Template environment variables
+├── .gitignore                # Git ignore file
+├── README.md                 # Dokumentasi project
+├── QUICKSTART.md             # Panduan memulai
+├── CONTRIBUTING.md           # Panduan kontribusi
+├── DEPLOYMENT.md             # Panduan deployment
+├── LICENSE                   # Lisensi project
 ├── config/
-│   └── settings.py       # Konfigurasi aplikasi
+│   └── settings.py           # Konfigurasi aplikasi
 ├── src/
 │   ├── __init__.py
 │   ├── bot/
 │   │   ├── __init__.py
+│   │   ├── handlers/         # Bot handlers (command, callback, message)
+│   │   └── keyboards/        # Inline keyboards & markup
+│   ├── database/
+│   │   ├── __init__.py
+│   │   ├── database.py       # Database connection & session
+│   │   └── models.py         # SQLAlchemy models
+│   ├── services/
+│   │   ├── __init__.py
+│   │   ├── broadcast_service.py     # Personalized broadcast system
+│   │   ├── backup_service.py        # Backup & recovery management
+│   │   ├── emergency_service.py     # Crisis intervention
+│   │   ├── journal_service.py       # Journaling functionality
+│   │   ├── motivational_service.py  # Quotes & encouragement
+│   │   ├── streak_service.py        # Streak calculations
+│   │   └── user_service.py          # User management & mood tracking
+│   └── utils/
+│       ├── __init__.py
+│       ├── helpers.py        # Helper functions
+│       └── logger.py         # Custom logging setup
+├── data/
+│   ├── database.db           # SQLite database
+│   ├── quotes.json           # Quotes database
+│   └── tips.json             # Tips & coping strategies
+├── docs/
+│   ├── ADMIN_GUIDE.md                  # Admin documentation
+│   ├── MOOD_CHECKIN_ENHANCEMENT.md     # Mood check-in feature docs
+│   └── BROADCAST_SYSTEM_SUMMARY.md     # Broadcast system docs
+├── logs/
+│   ├── pmo_bot.log           # Application logs
+│   └── errors.log            # Error logs
+├── backups/                  # Automated & manual backups
+└── tests/
+    ├── __init__.py
+    ├── test_broadcast_mood.py     # Broadcast with mood check-in tests
+    ├── test_mood_enhancement.py   # Mood tracking feature tests
+    └── [other test files]         # Various component tests
 │   │   ├── handlers/     # Bot message handlers
 │   │   ├── keyboards/    # Inline keyboards
 │   │   └── middleware/   # Bot middleware
@@ -149,7 +229,9 @@ pmo-recovery-bot/
 5. Dapatkan motivasi dengan `/motivation`
 6. Mode darurat dengan `/emergency`
 7. Check-in harian dengan `/checkin`
-8. **Backup management (Admin)** dengan `/backup`
+8. Mood tracking dengan `/mood`
+9. Jurnal pribadi dengan `/journal`
+10. **Backup management (Admin)** dengan `/backup`
 
 ### 💾 Data Backup & Recovery
 - **Automated Backups**: Daily (3AM) & Weekly (Sunday 2AM)
@@ -195,7 +277,47 @@ tests/
 │   ├── test_backup_creation.py  # Backup creation functionality
 │   ├── test_restore_process.py  # Data restore verification
 │   └── test_database_recovery.py # Database repair testing
-│   ├── test_bot.py              # Comprehensive bot setup testing
+└── 🌡️ **Mood & Broadcast Tests**
+    ├── test_broadcast_mood.py    # Broadcast with mood check-in tests
+    ├── test_mood_enhancement.py  # Mood check-in feature tests
+    └── test_mood_analysis.py     # Mood data analysis testing
+
+## 📋 Changelog
+
+### v1.3.0 (August 2025)
+- ✨ **Added:** Mood check-in enhancement
+- 🌟 **Added:** Enhanced broadcast system with personalized content
+- 🔄 **Improved:** Logger implementation unified across modules
+- 📊 **Added:** User statistics reporting tools
+- 🎯 **Improved:** Testing structure organization
+- 📝 **Updated:** Documentation
+
+### v1.2.0 (July 2025)
+- 💾 **Added:** Advanced backup & recovery system
+- 🚨 **Added:** Emergency backup functionality 
+- 🔧 **Added:** One-click restore process
+- 📊 **Added:** Database integrity monitoring
+
+### v1.1.0 (June 2025)
+- 📝 **Added:** Journal system
+- 🎯 **Added:** Trigger analysis
+- 🆘 **Improved:** Emergency intervention system
+- 📈 **Improved:** Streak analytics
+
+### v1.0.0 (May 2025)
+- 🚀 Initial release
+
+## 📞 Contact & Support
+
+For questions, support, or contributions, please contact:
+- **Developer:** Ahmad Munir
+- **Email:** developer@example.com
+- **GitHub:** [AhmadMunir](https://github.com/AhmadMunir)
+- **Support Group:** [t.me/PMORecoveryBotSupport](https://t.me/PMORecoveryBotSupport)
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 │   └── test_handlers.py         # Handler functionality testing
 ├── 🆘 Emergency Tests
 │   ├── test_emergency.py        # Emergency callback routing
